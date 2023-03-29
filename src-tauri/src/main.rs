@@ -3,6 +3,7 @@ all(not(debug_assertions), target_os = "windows"),
 windows_subsystem = "windows"
 )]
 
+
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[tauri::command]
 fn greet(name: &str) -> String {
@@ -10,19 +11,14 @@ fn greet(name: &str) -> String {
 }
 
 #[tauri::command]
-fn sum(a: u8, b: u8) -> u8 {
-    a + b
-}
-
-
-#[tauri::command]
-fn str_to_hex(string: &str) -> String {
-    format!("{}", hex::encode(string))
+fn say_hello() -> String {
+    println!("Hello from Rust!");
+    return String::from("Hello from Rust!");
 }
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![greet, sum, str_to_hex])
+        .invoke_handler(tauri::generate_handler![greet, say_hello])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
